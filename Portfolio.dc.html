@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Eugen Matković — Web Designer &amp; Developer. Premium portfolio based in Berlin, Germany.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Barlow:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<title>Eugen Matković — Portfolio</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#0D1F4C;color:#fff;font-family:'Barlow',sans-serif;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* TYPOGRAPHY */
+.mega{font-family:'Bebas Neue',sans-serif;color:#fff;line-height:.92;letter-spacing:1px;display:block}
+.lbl{font-family:'Barlow',sans-serif;font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:2.5px;color:rgba(255,255,255,.4)}
+.bt{font-family:'Barlow',sans-serif;font-weight:300;color:rgba(255,255,255,.68);line-height:1.8;font-size:15px}
+
+/* FIXED NAV */
+.snav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:24px 60px;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.nlogo{font-family:'Bebas Neue',sans-serif;font-size:30px;color:#fff;pointer-events:all;letter-spacing:3px;transition:opacity .2s}
+.nlogo:hover{opacity:.5}
+.mbtn{pointer-events:all;display:flex;flex-direction:column;gap:6px;padding:6px;background:none;border:none;cursor:pointer}
+.mbtn span{width:26px;height:2px;background:#fff;display:block;transition:all .3s cubic-bezier(.4,0,.2,1);transform-origin:center}
+.mbtn.open span:nth-child(1){transform:rotate(45deg) translate(5px,6px)}
+.mbtn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.mbtn.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-6px)}
+
+/* MENU OVERLAY */
+.smenu{position:fixed;inset:0;background:#030A14;z-index:999;display:flex;flex-direction:column;justify-content:center;padding:80px;opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(.4,0,.2,1)}
+.smenu.open{opacity:1;pointer-events:all}
+.mlink{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,108px);color:rgba(255,255,255,.18);transition:color .2s,letter-spacing .2s;display:block;line-height:1.05;letter-spacing:1px}
+.mlink:hover{color:#fff;letter-spacing:4px}
+
+/* POLAROID */
+.pol{background:#fff;padding:10px 10px 44px 10px;box-shadow:0 16px 50px rgba(0,0,0,.45);display:inline-block}
+
+/* PROJECT CARDS */
+.pw{display:inline-block}
+.pp{transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s ease}
+.pw:hover .pp{transform:rotate(0deg) scale(1.05)!important;box-shadow:0 32px 80px rgba(0,0,0,.65)}
+.pn{font-family:'Bebas Neue',sans-serif;font-size:16px;color:rgba(255,255,255,.7);letter-spacing:2px;margin-top:10px;text-align:center;display:block;transition:color .2s}
+.pw:hover .pn{color:#fff}
+.ptag{font-family:'Barlow',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);display:block;text-align:center;margin-top:3px}
+
+/* SKILL ROWS */
+.sr{font-family:'Barlow',sans-serif;font-size:16px;font-weight:300;color:rgba(255,255,255,.7);padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);transition:color .15s,padding-left .2s;cursor:default}
+.sr:hover{color:#fff;padding-left:10px}
+
+/* SERVICE ITEMS */
+.si{padding:24px 20px;border-right:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);font-family:'Barlow',sans-serif;font-size:13px;font-weight:400;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;transition:all .2s;cursor:default}
+.si:hover{background:rgba(255,255,255,.05);color:#fff}
+
+/* BLOG CARDS */
+.bc{padding:36px 30px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);transition:background .25s;display:flex;flex-direction:column;cursor:pointer}
+.bc:hover{background:rgba(255,255,255,.065)}
+.btit{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;line-height:1.05;letter-spacing:1px;margin:14px 0 10px}
+
+/* TICKER */
+@keyframes tfwd{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes tbwd{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.ttf{display:flex;gap:48px;white-space:nowrap;animation:tfwd 32s linear infinite}
+.ttb{display:flex;gap:48px;white-space:nowrap;animation:tbwd 32s linear infinite}
+
+/* SCROLL REVEAL */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.rv.in{opacity:1;transform:none}
+.rd1{transition-delay:.12s}.rd2{transition-delay:.24s}.rd3{transition-delay:.36s}.rd4{transition-delay:.48s}
+
+/* HERO ENTRANCE */
+@keyframes hup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.ha1{animation:hup .9s ease both}
+.ha2{animation:hup .9s ease .15s both}
+.ha3{animation:hup .9s ease .3s both}
+.ha4{animation:hup .9s ease .5s both}
+
+/* SECTION PADDING */
+.sp{padding:120px 60px 80px}
+
+/* GRIDS */
+.ag{display:grid;grid-template-columns:2fr 1fr 1.6fr;gap:64px;align-items:center;width:100%}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);column-gap:60px}
+.bg{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.vg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));border-top:1px solid rgba(255,255,255,.08);border-left:1px solid rgba(255,255,255,.08)}
+.wr{display:flex;justify-content:center;align-items:flex-end;gap:36px;flex-wrap:wrap;padding:0 60px}
+
+/* PAGE LOADER */
+#loader{position:fixed;inset:0;background:#0D1F4C;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .85s cubic-bezier(.76,0,.24,1),transform .85s cubic-bezier(.76,0,.24,1);opacity:1}
+#loader.exit{opacity:0;pointer-events:none;transform:translateY(-100%)}
+.ldn{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,10vw,150px);color:#fff;letter-spacing:4px;line-height:.9;display:block;overflow:hidden}
+.ldi{display:block;transform:translateY(110%);transition:transform .75s cubic-bezier(.76,0,.24,1)}
+.ldi.in{transform:translateY(0)}
+#ldLine{width:0;height:1px;background:rgba(255,255,255,.7);transition:width 1s ease .4s;margin-top:32px}
+#ldLine.in{width:180px}
+#ldSub{font-family:'Barlow',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:3px;color:rgba(255,255,255,.3);margin-top:14px;opacity:0;transition:opacity .5s ease .55s}
+#ldSub.in{opacity:1}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .snav{padding:20px 40px}
+  .smenu{padding:80px 40px}
+  .sp{padding:100px 40px 60px}
+  .ag{grid-template-columns:1fr 1fr}
+  .ag>*:first-child{grid-column:1/-1}
+  .sg{grid-template-columns:1fr 1fr}
+  .bg{grid-template-columns:1fr 1fr}
+  .wr{padding:0 40px}
+}
+@media(max-width:640px){
+  .snav{padding:16px 20px}
+  .smenu{padding:80px 24px}
+  .sp{padding:80px 24px 48px}
+  .ag,.sg,.bg{grid-template-columns:1fr}
+  .vg{grid-template-columns:1fr 1fr}
+  .wr{padding:0 24px;gap:20px}
+}
+</style>
+</helmet>
+
+<!-- PAGE LOADER -->
+
+  
+  <div id="ldLine"></div>
+  <span id="ldSub">Portfolio — 2026</span>
+
+
+<!-- FIXED NAV -->
+<nav class="snav">
+  <a href="#home" class="nlogo">EM</a>
+  <button class="mbtn" id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- FULL SCREEN MENU -->
+<div class="smenu" id="siteMenu">
+  <span class="lbl" style="margin-bottom:44px;opacity:.5;">EUGEN MATKOVIĆ</span>
+  <a href="#home" class="mlink" data-close="">HOME</a>
+  <a href="#about" class="mlink" data-close="">ABOUT</a>
+  <a href="#work" class="mlink" data-close="">WORK</a>
+  <a href="#skills" class="mlink" data-close="">SKILLS</a>
+  <a href="#services" class="mlink" data-close="">SERVICES</a>
+  <a href="#blog" class="mlink" data-close="">BLOG</a>
+  <a href="#contact" class="mlink" data-close="">CONTACT</a>
+  <span class="lbl" style="margin-top:44px;opacity:.35;">BERLIN, GERMANY</span>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="home" style="position:relative;min-height:100vh;background:linear-gradient(135deg,#1a0a4d 0%,#0D1F4C 100%);display:flex;align-items:stretch;overflow:hidden;">
+
+  <!-- Top labels -->
+  <span class="lbl ha1" style="position:absolute;top:60px;left:60px;z-index:3;font-size:11px;">CREATIVE DESIGN PORTFOLIO</span>
+  <span class="lbl ha1" style="position:absolute;top:60px;right:60px;z-index:3;font-size:11px;">BY EUGEN MATKOVIĆ</span>
+
+  <!-- Left: TEXT DOMINATES (70%) -->
+  <div class="ha1" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:80px 60px 80px 60px;z-index:3;position:relative;">
+    
+    <!-- Huge Name -->
+    <div id="heroText" style="margin-bottom:48px;">
+      <span class="mega" style="font-size:clamp(64px,15vw,220px);display:block;line-height:.85;color:#fff;margin-bottom:-12px;letter-spacing:-2px;">EUGEN</span>
+      <span class="mega" style="font-size:clamp(64px,15vw,220px);display:block;line-height:.85;color:#fff;letter-spacing:-2px;">MATKOVIĆ</span>
+    </div>
+
+    <!-- Subtitle -->
+    <span class="lbl" style="display:block;margin-bottom:28px;color:rgba(255,255,255,.4);">DESIGNER &amp; DEVELOPER</span>
+
+    <!-- Body text -->
+    <div style="max-width:480px;">
+      <p style="font-family:'Barlow',sans-serif;font-size:15px;line-height:1.8;color:rgba(255,255,255,.7);margin-bottom:24px;">I craft modern websites, UI designs, and AI-assisted creative projects that combine aesthetic excellence with functional precision.</p>
+      <p style="font-family:'Barlow',sans-serif;font-size:15px;line-height:1.8;color:rgba(255,255,255,.7);margin-bottom:32px;">Based in Berlin, open to projects worldwide. Let's create something that stands out.</p>
+      
+      <!-- Info row -->
+      <div style="display:flex;gap:40px;margin-top:40px;">
+        <div>
+          <span class="lbl" style="display:block;margin-bottom:6px;color:rgba(255,255,255,.3);">BASED</span>
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:#fff;letter-spacing:1px;">BERLIN</span>
+        </div>
+        <div>
+          <span class="lbl" style="display:block;margin-bottom:6px;color:rgba(255,255,255,.3);">STATUS</span>
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:#fff;letter-spacing:1px;">AVAILABLE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: FULL-HEIGHT IMAGE (30%) -->
+  <div class="ha2" style="flex:0 0 35%;position:relative;overflow:hidden;z-index:2;">
+    <div style="width:100%;height:100%;position:relative;">
+      <img src="uploads/photo-1781820296055.jpeg" alt="Eugen Matković" style="width:100%;height:100%;object-fit:cover;object-position:center 15%;filter:grayscale(100%) brightness(.9) contrast(1.1);">
+      <!-- Overlay gradient for text blend -->
+      <div style="position:absolute;inset:0;background:linear-gradient(to left,rgba(13,31,76,.3),transparent);"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER 1 -->
+<div id="ticker1" style="background:#040D1A;padding:13px 0;overflow:hidden;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);">
+  <div class="ttf">
+    <span class="lbl">CREATIVE DESIGN PORTFOLIO</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">EUGEN MATKOVIĆ</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">BERLIN, GERMANY</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">WEB DESIGNER &amp; DEVELOPER</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">AI-ASSISTED PROJECTS</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">CREATIVE DESIGN PORTFOLIO</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">EUGEN MATKOVIĆ</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">BERLIN, GERMANY</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">WEB DESIGNER &amp; DEVELOPER</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">AI-ASSISTED PROJECTS</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+  </div>
+</div>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<section id="about" class="sp" style="position:relative;min-height:100vh;background:#081529;display:flex;align-items:center;overflow:hidden;">
+  <span class="lbl rv" style="position:absolute;top:104px;left:60px;">CREATIVE DESIGN PORTFOLIO</span>
+  <span class="lbl rv" style="position:absolute;top:104px;right:60px;">BY EUGEN MATKOVIĆ</span>
+
+  <div class="ag">
+    <div class="rv">
+      <span class="mega" style="font-size:clamp(54px,9vw,140px);">DRIVEN</span>
+      <span class="mega" style="font-size:clamp(54px,9vw,140px);">BY</span>
+      <span class="mega" style="font-size:clamp(54px,9vw,140px);">DESIGN</span>
+      <span class="mega" style="font-size:clamp(54px,9vw,140px);">&amp; CODE</span>
+    </div>
+
+    <div class="rv rd1" style="display:flex;justify-content:center;">
+      <div class="pol" style="transform:rotate(2deg);">
+        <div style="width:210px;height:290px;overflow:hidden;">
+          <img src="uploads/photo-1781820296055.jpeg" alt="Eugen Matković" style="width:100%;height:100%;object-fit:cover;object-position:center 15%;filter:grayscale(100%);">
+        </div>
+      </div>
+    </div>
+
+    <div class="rv rd2">
+      <p class="bt" style="margin-bottom:18px;">I'm Eugen Matković, a web designer and developer focused on creating modern websites, UI designs, and AI-assisted creative projects.</p>
+      <p class="bt" style="margin-bottom:18px;">My background combines design and development, allowing me to take projects from concept to a functional final product.</p>
+      <p class="bt" style="margin-bottom:40px;">I enjoy building clean, visually engaging experiences that are easy to use and memorable.</p>
+      <span class="lbl" style="display:block;margin-bottom:6px;">Based In</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;letter-spacing:1px;">BERLIN, GERMANY</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ WORK ═══════════════ -->
+<section id="work" style="position:relative;min-height:100vh;background:#0D1F4C;overflow:hidden;padding:120px 0 80px;display:flex;flex-direction:column;">
+  <span class="lbl rv" style="position:absolute;top:104px;left:60px;">CREATIVE DESIGN PORTFOLIO</span>
+  <span class="lbl rv" style="position:absolute;top:104px;right:60px;">BY EUGEN MATKOVIĆ</span>
+
+  <!-- Project Polaroids -->
+  <div class="wr rv" style="flex:1;padding-top:40px;align-items:center;">
+
+    <div class="pw" style="margin-top:30px;">
+      <a href="https://ematkovichh.github.io/Nocturne-website/" target="_blank" rel="noopener">
+        <div class="pol pp" style="transform:rotate(-5deg);">
+          <div style="width:185px;height:245px;background:linear-gradient(160deg,#050510 0%,#1a0a2e 100%);"></div>
+        </div>
+        <span class="pn">NOCTURNE</span>
+        <span class="ptag">Dark atmospheric</span>
+      </a>
+    </div>
+
+    <div class="pw" style="margin-top:-20px;">
+      <a href="https://ematkovichh.github.io/y2k-art-website/" target="_blank" rel="noopener">
+        <div class="pol pp" style="transform:rotate(3deg);">
+          <div style="width:185px;height:245px;background:linear-gradient(145deg,#cc0055 0%,#ff7700 100%);"></div>
+        </div>
+        <span class="pn">Y2K ART</span>
+        <span class="ptag">Experimental</span>
+      </a>
+    </div>
+
+    <div class="pw" style="margin-top:40px;">
+      <a href="https://ematkovichh.github.io/Statistically-website/" target="_blank" rel="noopener">
+        <div class="pol pp" style="transform:rotate(-2deg);">
+          <div style="width:185px;height:245px;background:linear-gradient(160deg,#0a3d5c 0%,#1a8ca8 100%);"></div>
+        </div>
+        <span class="pn">STATISTICALLY</span>
+        <span class="ptag">Data presentation</span>
+      </a>
+    </div>
+
+    <div class="pw" style="margin-top:10px;">
+      <a href="https://ematkovichh.github.io/Observers-Website/" target="_blank" rel="noopener">
+        <div class="pol pp" style="transform:rotate(5deg);">
+          <div style="width:185px;height:245px;background:linear-gradient(160deg,#1a1a1a 0%,#2e2e2e 100%);"></div>
+        </div>
+        <span class="pn">OBSERVERS</span>
+        <span class="ptag">Minimal modern</span>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="rv" style="padding:48px 60px 0;">
+    <span class="mega" style="font-size:clamp(58px,12vw,185px);">FEATURED</span>
+    <span class="mega" style="font-size:clamp(58px,12vw,185px);">WORK</span>
+  </div>
+</section>
+
+<!-- TICKER 2 (reversed) -->
+<div id="ticker2" style="background:#040D1A;padding:13px 0;overflow:hidden;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);">
+  <div class="ttb">
+    <span class="lbl">HTML5 &amp; CSS3</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">JAVASCRIPT</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">FIGMA</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">WORDPRESS</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">UI DESIGN</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">MIDJOURNEY</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">AI-ASSISTED WORKFLOW</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">HTML5 &amp; CSS3</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">JAVASCRIPT</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">FIGMA</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">WORDPRESS</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">UI DESIGN</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">MIDJOURNEY</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+    <span class="lbl">AI-ASSISTED WORKFLOW</span><span class="lbl" style="color:rgba(255,255,255,.12);">✦</span>
+  </div>
+</div>
+
+<!-- ═══════════════ SKILLS ═══════════════ -->
+<section id="skills" class="sp" style="position:relative;min-height:100vh;background:#081529;overflow:hidden;display:flex;flex-direction:column;justify-content:center;">
+  <span class="lbl rv" style="position:absolute;top:104px;left:60px;">CREATIVE DESIGN PORTFOLIO</span>
+  <span class="lbl rv" style="position:absolute;top:104px;right:60px;">BY EUGEN MATKOVIĆ</span>
+
+  <div class="rv" style="margin-bottom:56px;">
+    <span class="mega" style="font-size:clamp(52px,10vw,155px);">SKILLS &amp;</span>
+    <span class="mega" style="font-size:clamp(52px,10vw,155px);">EXPERTISE</span>
+  </div>
+
+  <div class="sg rv rd1">
+    <div>
+      <span class="lbl" style="display:block;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:4px;">Design</span>
+      <div class="sr">UI Design</div>
+      <div class="sr">UX Design</div>
+      <div class="sr">Figma</div>
+      <div class="sr">Canva</div>
+      <div class="sr">Adobe Photoshop</div>
+      <div class="sr">Adobe Illustrator</div>
+      <div class="sr">Branding</div>
+      <div class="sr">Social Media Design</div>
+      <div class="sr">AI Image Generation</div>
+    </div>
+    <div>
+      <span class="lbl" style="display:block;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:4px;">Development</span>
+      <div class="sr">HTML5</div>
+      <div class="sr">CSS3</div>
+      <div class="sr">JavaScript</div>
+      <div class="sr">Responsive Web Design</div>
+      <div class="sr">WordPress</div>
+      <div class="sr">Elementor</div>
+    </div>
+    <div>
+      <span class="lbl" style="display:block;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:4px;">AI Tools</span>
+      <div class="sr">ChatGPT</div>
+      <div class="sr">Claude</div>
+      <div class="sr">Nano Banana</div>
+      <div class="sr">Midjourney</div>
+      <div class="sr">Kling</div>
+      <div class="sr">Higgsfield</div>
+      <div class="sr">Veo</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<section id="services" class="sp" style="position:relative;min-height:100vh;background:#0D1F4C;overflow:hidden;display:flex;flex-direction:column;justify-content:center;">
+  <span class="lbl rv" style="position:absolute;top:104px;left:60px;">CREATIVE DESIGN PORTFOLIO</span>
+  <span class="lbl rv" style="position:absolute;top:104px;right:60px;">BY EUGEN MATKOVIĆ</span>
+
+  <div class="rv" style="margin-bottom:56px;">
+    <span class="mega" style="font-size:clamp(52px,10vw,155px);">WHAT</span>
+    <span class="mega" style="font-size:clamp(52px,10vw,155px);">I OFFER</span>
+  </div>
+
+  <div class="vg rv rd1">
+    <div class="si">Website Design</div>
+    <div class="si">Website Development</div>
+    <div class="si">Landing Page Design</div>
+    <div class="si">UI/UX Design</div>
+    <div class="si">WordPress Websites</div>
+    <div class="si">Portfolio Websites</div>
+    <div class="si">AI Image Creation</div>
+    <div class="si">AI Video Creation</div>
+    <div class="si">Social Media Design</div>
+    <div class="si">Branding Assets</div>
+    <div class="si">Presentation Design</div>
+  </div>
+</section>
+
+<!-- ═══════════════ BLOG ═══════════════ -->
+<section id="blog" class="sp" style="position:relative;min-height:100vh;background:#081529;overflow:hidden;display:flex;flex-direction:column;justify-content:center;">
+  <span class="lbl rv" style="position:absolute;top:104px;left:60px;">CREATIVE DESIGN PORTFOLIO</span>
+  <span class="lbl rv" style="position:absolute;top:104px;right:60px;">BY EUGEN MATKOVIĆ</span>
+
+  <div class="rv" style="margin-bottom:56px;">
+    <span class="mega" style="font-size:clamp(52px,10vw,155px);">INSIGHTS</span>
+    <span class="mega" style="font-size:clamp(52px,10vw,155px);">&amp; ARTICLES</span>
+  </div>
+
+  <div class="bg">
+    <div class="bc rv">
+      <span class="lbl" style="font-size:11px;">June 2026 — 5 min read</span>
+      <div class="btit">The Role of AI in Modern Web Design</div>
+      <p class="bt" style="font-size:14px;flex:1;">How AI tools are reshaping the creative workflow and what it means for designers who embrace them.</p>
+      <span class="lbl" style="margin-top:24px;color:rgba(255,255,255,.25);">READ ARTICLE →</span>
+    </div>
+    <div class="bc rv rd1">
+      <span class="lbl" style="font-size:11px;">May 2026 — 4 min read</span>
+      <div class="btit">Building Atmospheres: Lessons from Nocturne</div>
+      <p class="bt" style="font-size:14px;flex:1;">Breaking down the design decisions behind a dark, immersive portfolio site and what made it work.</p>
+      <span class="lbl" style="margin-top:24px;color:rgba(255,255,255,.25);">READ ARTICLE →</span>
+    </div>
+    <div class="bc rv rd2">
+      <span class="lbl" style="font-size:11px;">April 2026 — 6 min read</span>
+      <div class="btit">Why Y2K Aesthetics Are Back and Here to Stay</div>
+      <p class="bt" style="font-size:14px;flex:1;">Exploring the resurgence of bold, maximalist visual design and how to use it with intention.</p>
+      <span class="lbl" style="margin-top:24px;color:rgba(255,255,255,.25);">READ ARTICLE →</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section id="contact" class="sp" style="position:relative;min-height:80vh;background:#0D1F4C;overflow:hidden;display:flex;flex-direction:column;justify-content:center;">
+  <span class="lbl rv" style="position:absolute;top:104px;left:60px;">GET IN TOUCH</span>
+
+  <div class="rv">
+    <span class="mega" style="font-size:clamp(52px,11vw,168px);">LET'S BUILD</span>
+    <span class="mega" style="font-size:clamp(52px,11vw,168px);">SOMETHING</span>
+    <span class="mega" style="font-size:clamp(52px,11vw,168px);color:rgba(255,255,255,.16);">UNCOMPROMISING</span>
+  </div>
+
+  <div class="rv rd1" style="margin-top:44px;max-width:500px;">
+    <p class="bt" style="font-size:16px;line-height:1.85;">Based in Berlin, Germany. Open to projects worldwide. Let's create something that stands out.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#030A14;padding:36px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;">
+  <span style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:rgba(255,255,255,.6);letter-spacing:2px;">EUGEN MATKOVIĆ</span>
+  <span class="lbl" style="color:rgba(255,255,255,.2);">BERLIN, GERMANY</span>
+  <span class="lbl" style="color:rgba(255,255,255,.2);">© 2026 ALL RIGHTS RESERVED</span>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: &quot;100%&quot;, &quot;height&quot;: &quot;100%&quot; },
+  &quot;colorTheme&quot;: {
+    &quot;editor&quot;: &quot;enum&quot;,
+    &quot;options&quot;: [&quot;Navy&quot;, &quot;Purple&quot;, &quot;Black&quot;, &quot;Indigo&quot;],
+    &quot;default&quot;: &quot;Navy&quot;,
+    &quot;tsType&quot;: &quot;string&quot;
+  },
+  &quot;polaroidMode&quot;: {
+    &quot;editor&quot;: &quot;enum&quot;,
+    &quot;options&quot;: [&quot;Overlapping&quot;, &quot;Behind Text&quot;],
+    &quot;default&quot;: &quot;Overlapping&quot;,
+    &quot;tsType&quot;: &quot;string&quot;
+  },
+  &quot;showBlog&quot;: {
+    &quot;editor&quot;: &quot;boolean&quot;,
+    &quot;default&quot;: true,
+    &quot;tsType&quot;: &quot;boolean&quot;
+  },
+  &quot;showTicker&quot;: {
+    &quot;editor&quot;: &quot;boolean&quot;,
+    &quot;default&quot;: true,
+    &quot;tsType&quot;: &quot;boolean&quot;
+  }
+}">
+class Component extends DCLogic {
+  themes = {
+    'Navy':   { primary: '#0D1F4C', alt: '#081529', ticker: '#040D1A', footer: '#030A14', loader: '#0D1F4C' },
+    'Purple': { primary: '#2200CC', alt: '#1800AA', ticker: '#0E0070', footer: '#080050', loader: '#2200CC' },
+    'Black':  { primary: '#111111', alt: '#080808', ticker: '#050505', footer: '#020202', loader: '#111111' },
+    'Indigo': { primary: '#1A1A2E', alt: '#0F0F1E', ticker: '#080818', footer: '#050510', loader: '#1A1A2E' },
+  };
+
+  applyProps() {
+    const theme = this.props.colorTheme ?? 'Navy';
+    const colors = this.themes[theme] || this.themes['Navy'];
+    const polaroidMode = this.props.polaroidMode ?? 'Overlapping';
+    const showBlog = this.props.showBlog ?? true;
+    const showTicker = this.props.showTicker ?? true;
+
+    // Apply theme to sections
+    ['home','work','services','contact'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.background = colors.primary;
+    });
+    ['about','skills','blog'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.background = colors.alt;
+    });
+    ['ticker1','ticker2'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.background = colors.ticker;
+    });
+    const footer = document.querySelector('footer');
+    if (footer) footer.style.background = colors.footer;
+    const loader = document.getElementById('loader');
+    if (loader) loader.style.background = colors.loader;
+
+    // Polaroid mode
+    const pols = document.getElementById('heroPolaroids');
+    const txt  = document.getElementById('heroText');
+    if (pols && txt) {
+      if (polaroidMode === 'Behind Text') {
+        pols.style.zIndex = '1';
+        txt.style.zIndex  = '2';
+      } else {
+        pols.style.zIndex = '2';
+        txt.style.zIndex  = '1';
+      }
+    }
+
+    // Show / hide blog
+    const blog = document.getElementById('blog');
+    if (blog) blog.style.display = showBlog ? '' : 'none';
+
+    // Show / hide tickers
+    ['ticker1','ticker2'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = showTicker ? '' : 'none';
+    });
+  }
+
+  componentDidUpdate() { this.applyProps(); }
+
+  componentDidMount() {
+    // ── Page loader ──
+    const loader = document.getElementById('loader');
+    if (loader) {
+      setTimeout(() => {
+        document.getElementById('ldEugen').classList.add('in');
+        document.getElementById('ldMat').classList.add('in');
+        document.getElementById('ldLine').classList.add('in');
+        document.getElementById('ldSub').classList.add('in');
+      }, 120);
+      setTimeout(() => {
+        loader.classList.add('exit');
+        setTimeout(() => { 
+          loader.style.display = 'none';
+          loader.style.pointerEvents = 'none';
+        }, 850);
+      }, 2300);
+    }
+
+    // ── Menu toggle ──
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('siteMenu');
+    if (btn && menu) {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+      document.querySelectorAll('[data-close]').forEach(link => {
+        link.addEventListener('click', () => {
+          btn.classList.remove('open');
+          menu.classList.remove('open');
+        });
+      });
+    }
+
+    // ── Apply initial props ──
+    this.applyProps();
+
+    // ── Scroll reveal ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rv').forEach(el => observer.observe(el));
+  }
+
+  renderVals() { return {}; }
+}
+
+</script>
+</body>
+</html>
