@@ -1,14 +1,16 @@
 # Eugen Matković — Creative Design Portfolio
 
+https://ematkovichh.github.io/portfolio.website/
+
 Premium portfolio website for a web designer & developer based in Berlin, Germany.
 
 ## Features
 
-✨ **Modern & Editorial Design** — Text-dominant layout with full-height image accent  
-🎨 **Smooth Animations** — Page loader, scroll reveals, hover effects  
-📱 **Fully Responsive** — Mobile, tablet, and desktop optimized  
-⚡ **Performance** — Pure HTML/CSS/JS, no frameworks, fast load times  
-🎯 **SEO Friendly** — Semantic HTML, proper meta tags  
+ **Modern & Editorial Design** — Text-dominant layout with full-height image accent  
+ **Smooth Animations** — Page loader, scroll reveals, hover effects  
+ **Fully Responsive** — Mobile, tablet, and desktop optimized  
+ **Performance** — Pure HTML/CSS/JS, no frameworks, fast load times  
+ **SEO Friendly** — Semantic HTML, proper meta tags  
 
 ## Structure
 
