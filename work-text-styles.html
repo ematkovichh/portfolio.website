@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Featured Work — animated text options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0D1F4C;color:#fff;font-family:'Barlow',sans-serif;-webkit-font-smoothing:antialiased}
+  .lbl{font-family:'Barlow',sans-serif;font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:2.5px;color:rgba(255,255,255,.4)}
+  .wrap{max-width:1100px;margin:0 auto;padding:80px 40px 120px}
+  .opt{padding:70px 0;border-top:1px solid rgba(255,255,255,.08)}
+  .opt:first-of-type{border-top:none}
+  .opt > .lbl{display:block;margin-bottom:8px}
+  .opt h2{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:rgba(255,255,255,.55);font-weight:400;margin-bottom:40px}
+  .opt h2 b{color:#fff;font-weight:400}
+
+  /* ───────── OPTION A · Tracking expand + fill ───────── */
+  .a-list a{
+    display:inline-block;font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(44px,8vw,96px);line-height:1.08;letter-spacing:1px;
+    color:rgba(255,255,255,.18);text-decoration:none;
+    transition:color .25s,letter-spacing .25s;position:relative;
+  }
+  .a-list a .tag{
+    font-family:'Barlow',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;
+    color:rgba(255,255,255,0);margin-left:18px;vertical-align:middle;transition:color .25s;
+  }
+  .a-list a:hover{color:#fff;letter-spacing:5px}
+  .a-list a:hover .tag{color:rgba(255,255,255,.45)}
+  .a-row{display:block}
+
+  /* ───────── OPTION B · Vertical slide swap (mask) ───────── */
+  .b-list .b-row{display:block;margin:6px 0}
+  .b-list a{
+    display:inline-flex;align-items:baseline;gap:18px;text-decoration:none;
+  }
+  .b-mask{
+    position:relative;display:inline-block;overflow:hidden;height:1.04em;
+    font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,8vw,96px);line-height:1.04;letter-spacing:1px;
+  }
+  .b-mask span{display:block;transition:transform .4s cubic-bezier(.7,0,.2,1)}
+  .b-mask .top{color:rgba(255,255,255,.5)}
+  .b-mask .bot{color:#fff;position:absolute;top:100%;left:0}
+  .b-list a:hover .b-mask span{transform:translateY(-100%)}
+  .b-num{font-family:'Barlow',sans-serif;font-size:13px;font-weight:400;color:rgba(255,255,255,.3);letter-spacing:2px}
+
+  /* ───────── OPTION C · Underline sweep + arrow ───────── */
+  .c-list a{
+    display:flex;align-items:baseline;gap:24px;text-decoration:none;padding:14px 0;
+    font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,7vw,84px);line-height:1.1;letter-spacing:1px;
+    color:rgba(255,255,255,.45);transition:color .3s;position:relative;width:100%;
+  }
+  .c-list a .c-name{position:relative}
+  .c-list a .c-name::after{
+    content:"";position:absolute;left:0;bottom:.12em;height:2px;width:100%;
+    background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.7,0,.2,1);
+  }
+  .c-list a .c-tag{font-family:'Barlow',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.25);transition:color .3s}
+  .c-list a .c-arrow{margin-left:auto;font-family:'Barlow',sans-serif;font-size:clamp(28px,5vw,52px);color:#fff;opacity:0;transform:translateX(-14px);transition:opacity .3s,transform .3s}
+  .c-list a:hover{color:#fff}
+  .c-list a:hover .c-name::after{transform:scaleX(1)}
+  .c-list a:hover .c-tag{color:rgba(255,255,255,.6)}
+  .c-list a:hover .c-arrow{opacity:1;transform:translateX(0)}
+
+  /* ───────── OPTION D · Glitch / RGB split ───────── */
+  .d-list a{
+    display:inline-block;text-decoration:none;margin:10px 0;
+    font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,8vw,96px);line-height:1.1;letter-spacing:2px;
+    color:#fff;position:relative;
+  }
+  .d-list .d-row{display:block}
+  .d-list a .glitch{position:relative;display:inline-block}
+  .d-list a .glitch::before,
+  .d-list a .glitch::after{
+    content:attr(data-text);position:absolute;top:0;left:0;width:100%;
+    opacity:0;transition:opacity .15s;
+  }
+  .d-list a .glitch::before{color:#ff2f6d;clip-path:inset(0 0 55% 0)}
+  .d-list a .glitch::after{color:#28f0ff;clip-path:inset(55% 0 0 0)}
+  .d-list a:hover .glitch::before{opacity:.9;animation:dGlitchA .35s steps(2) infinite}
+  .d-list a:hover .glitch::after{opacity:.9;animation:dGlitchB .35s steps(2) infinite}
+  @keyframes dGlitchA{0%{transform:translate(0)}50%{transform:translate(-3px,-1px)}100%{transform:translate(2px,1px)}}
+  @keyframes dGlitchB{0%{transform:translate(0)}50%{transform:translate(3px,1px)}100%{transform:translate(-2px,-1px)}}
+  .d-list a .d-tag{font-family:'Barlow',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-left:16px;vertical-align:middle}
+
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="lbl" style="margin-bottom:6px">Eugen Matković — Featured Work</p>
+  <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,8vw,90px);letter-spacing:1px;line-height:.95;margin-bottom:10px">FOUR TEXT TREATMENTS</h1>
+  <p class="lbl" style="max-width:560px;line-height:1.9">Hover each one. Every name links to the real project. Pick a number and I'll drop it into Portfolio.dc.html.</p>
+
+  <!-- A -->
+  <section class="opt a-list">
+    <span class="lbl">Option A</span>
+    <h2><b>Tracking expand + fill</b> — your menu language. Letters spread and brighten; tag fades in.</h2>
+    <span class="a-row"><a href="https://ematkovichh.github.io/Nocturne-website/" target="_blank" rel="noopener">NOCTURNE<span class="tag">Dark atmospheric</span></a></span>
+    <span class="a-row"><a href="https://ematkovichh.github.io/y2k-art-website/" target="_blank" rel="noopener">Y2K ART<span class="tag">Experimental</span></a></span>
+    <span class="a-row"><a href="https://ematkovichh.github.io/Statistically-website/" target="_blank" rel="noopener">STATISTICALLY<span class="tag">Data presentation</span></a></span>
+  </section>
+
+  <!-- B -->
+  <section class="opt b-list">
+    <span class="lbl">Option B</span>
+    <h2><b>Vertical slide swap</b> — name slides up to reveal a brighter duplicate. Clean, agency-style.</h2>
+    <span class="b-row"><a href="https://ematkovichh.github.io/Nocturne-website/" target="_blank" rel="noopener"><span class="b-num">01</span><span class="b-mask"><span class="top">NOCTURNE</span><span class="bot">NOCTURNE</span></span></a></span>
+    <span class="b-row"><a href="https://ematkovichh.github.io/y2k-art-website/" target="_blank" rel="noopener"><span class="b-num">02</span><span class="b-mask"><span class="top">Y2K ART</span><span class="bot">Y2K ART</span></span></a></span>
+    <span class="b-row"><a href="https://ematkovichh.github.io/Statistically-website/" target="_blank" rel="noopener"><span class="b-num">03</span><span class="b-mask"><span class="top">STATISTICALLY</span><span class="bot">STATISTICALLY</span></span></a></span>
+  </section>
+
+  <!-- C -->
+  <section class="opt c-list">
+    <span class="lbl">Option C</span>
+    <h2><b>Underline sweep + arrow</b> — full-width rows, line wipes left→right, arrow slides in.</h2>
+    <a href="https://ematkovichh.github.io/Nocturne-website/" target="_blank" rel="noopener"><span class="c-name">NOCTURNE</span><span class="c-tag">Dark atmospheric</span><span class="c-arrow">→</span></a>
+    <a href="https://ematkovichh.github.io/y2k-art-website/" target="_blank" rel="noopener"><span class="c-name">Y2K ART</span><span class="c-tag">Experimental</span><span class="c-arrow">→</span></a>
+    <a href="https://ematkovichh.github.io/Statistically-website/" target="_blank" rel="noopener"><span class="c-name">STATISTICALLY</span><span class="c-tag">Data presentation</span><span class="c-arrow">→</span></a>
+  </section>
+
+  <!-- D -->
+  <section class="opt d-list">
+    <span class="lbl">Option D</span>
+    <h2><b>Glitch / RGB split</b> — Y2K energy. Best used sparingly, but it suits the experimental work.</h2>
+    <span class="d-row"><a href="https://ematkovichh.github.io/Nocturne-website/" target="_blank" rel="noopener"><span class="glitch" data-text="NOCTURNE">NOCTURNE</span><span class="d-tag">Dark atmospheric</span></a></span>
+    <span class="d-row"><a href="https://ematkovichh.github.io/y2k-art-website/" target="_blank" rel="noopener"><span class="glitch" data-text="Y2K ART">Y2K ART</span><span class="d-tag">Experimental</span></a></span>
+    <span class="d-row"><a href="https://ematkovichh.github.io/Statistically-website/" target="_blank" rel="noopener"><span class="glitch" data-text="STATISTICALLY">STATISTICALLY</span><span class="d-tag">Data presentation</span></a></span>
+  </section>
+
+</div>
+</body>
+</html>
